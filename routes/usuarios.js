@@ -8,7 +8,7 @@ const { validarJWT, validarCampos, tieneRol } = require('../middlewares')
 
 const { esRolValido, esCorreoValido, esIdValido } = require('../helpers/db-validators');
 
-const { usuariosGet, usuariosPost, usuariosDelete, usuariosPut } = require('../controllers/usuarios');
+const { usuariosGet, usuariosPut, usuariosPost, usuariosDelete } = require('../controllers/usuarios');
 
 
 const router = Router();

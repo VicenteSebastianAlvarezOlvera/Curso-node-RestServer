@@ -1,9 +1,7 @@
 const { response, request } = require('express');
-const { check, validationResult } = require('express-validator');
 const bcryptjs = require('bcryptjs');
 const Usuario = require('../models/usuario');
-const { existeCorreo } = require('../helpers/db-validators');
-const usuario = require('../models/usuario');
+
 const usuariosGet = async(req = request, res = response) => {
         const { limite = 5, desde = 0 } = req.query;
         const query = { estado: true };
