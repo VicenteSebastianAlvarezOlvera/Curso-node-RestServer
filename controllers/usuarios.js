@@ -56,12 +56,10 @@ const usuariosPut = async(req, res = response) => {
     res.json(usuario);
 }
 module.exports = {
-        usuariosGet,
-        //usuariosPatch,
-        usuariosPost,
-        usuariosDelete,
-        usuariosPut,
+    usuariosGet,
+    //usuariosPatch,
+    usuariosPost,
+    usuariosDelete,
+    usuariosPut,
 
-    }
-    //$2a$10$BH8d5A2XIYzt.lIpyo4afO7RpRP5lnOqUZBGVlaQ68sJRSY0oiKbe
-    //$2a$10$lhS1ZOsyp6bY/9leU1fOWuxm/WjfjhiALf6H.A6plwFQqhXdlpmAS
+}

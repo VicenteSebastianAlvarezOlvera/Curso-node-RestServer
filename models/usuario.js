@@ -19,15 +19,11 @@ const UsuarioSchema = Schema({
     rol: {
         type: String,
         required: true,
-        enum: ['ADMIN_ROLE', 'USER_ROLE']
+        enum: ['ADMIN', 'USUARIO', 'VENTAS']
     },
     estado: {
         type: Boolean,
         default: true
-    },
-    google: {
-        type: Boolean,
-        default: false
     }
 });
 UsuarioSchema.methods.toJSON = function() {
