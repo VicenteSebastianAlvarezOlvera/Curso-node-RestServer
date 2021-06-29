@@ -33,10 +33,18 @@ const esIdddValido = async(id) => {
         throw new Error(`El id ${id} no existe`)
     };
 }
+const coleccionesPermitidas = (coleccion = '', colecciones = []) => {
+    const incluida = colecciones.includes(coleccion);
+    if (!incluida) {
+        throw new Error(`La coleccion no es permitida`);
+    }
+    return true;
+}
 module.exports = {
     esRolValido,
     esCorreoValido,
     esIdValido,
     esIddValido,
-    esIdddValido
+    esIdddValido,
+    coleccionesPermitidas
 }
