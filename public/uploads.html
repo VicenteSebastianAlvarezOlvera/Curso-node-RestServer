@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir archivos</title>
+</head>
+
+<body>
+    <!--p>Elige a quien le cargarás el archivo:</p-->
+    <script>
+        //SE NECESITA CONSULTAR LA BASE DE DATOS PRIMERO
+        var personas = [{
+            "estado": true,
+            "nombre": "Vicente Alvarez",
+            "correo": "VicAlv2001@gmail.com",
+            "rol": "ADMIN_ROLE",
+            "img": "https://res.cloudinary.com/no-trabajo/image/upload/v1625149684/zvxlb0hvwtcilja0uwri.jpg",
+            "uid": "60db5ad494a34109f0ceaf4d"
+        }, {
+            "estado": true,
+            "nombre": "Sebastian Olvera",
+            "correo": "yesIdo@gmail.com",
+            "rol": "LECTOR",
+            "uid": "60dc9ef97ee9b70308441692"
+        }, {
+            "estado": true,
+            "nombre": "Mishita",
+            "correo": "mishigris@gmail.com",
+            "rol": "LECTOR",
+            "uid": "60dc9f0e7ee9b70308441696"
+        }]
+        let opcions = []
+        for (let i = 0; i < personas.length; i++) {
+            personas.forEach(element => {
+                opcions[i] = personas[i].nombre;
+            });
+        }
+        console.log(opcions);
+        //USEFUL FOR LATER
+        //https://howtocreateapps.com/fetch-and-display-json-html-javascript/
+    </script>
+    <div id="myData"></div>
+    <!--select name="nyc"-->
+
+    File:<input type="file" name="attach1" id="attach1">
+    <p>Enviar a:</p>
+    Radio:
+    <input type="radio" name="gender" value="opcions[i]">opcions[i]<br>
+    <input type="radio" name="gender" value="female">Female
+
+
+    </select>
+</body>
+
+</html>

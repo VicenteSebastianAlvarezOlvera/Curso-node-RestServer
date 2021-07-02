@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Roboto:300);
+        .login-page {
+            width: 360px;
+            padding: 8% 0 0;
+            margin: auto;
+        }
+        
+        input[type=text] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 2px solid #4f8533;
+            border-radius: 4px;
+        }
+        
+        input[type=password] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 2px solid #4f8533;
+            border-radius: 4px;
+        }
+        
+        div {
+            position: relative;
+            z-index: 1;
+            background: #79f061;
+            max-width: 360px;
+            margin: 0 auto 100px;
+            padding: 45px;
+            text-align: center;
+            box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+        }
+        
+        body {
+            background: #76b852;
+            /* fallback for old browsers */
+            background: -webkit-linear-gradient(right, #76b852, #8DC26F);
+            background: -moz-linear-gradient(right, #76b852, #8DC26F);
+            background: -o-linear-gradient(right, #76b852, #8DC26F);
+            background: linear-gradient(to left, #76b852, #8DC26F);
+            font-family: "Roboto", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
+    <title>Nuevo Usuario</title>
+</head>
+
+<body>
+    <div name=cuestio>
+        <FORM name=form action="TU_PAGINA_WEB.HTML">
+
+            <P>Usuario:
+                <INPUT type=text name=login>
+                <P>Contraseña:
+                    <INPUT type=password name=password>
+                    <P>Correo:
+                        <INPUT type=text name=email>
+                        <P>Rol(Pideselo a alguien más):
+                            <INPUT type=text name=rols>
+                            <INPUT onclick=go() type=button value=Acceder>
+                            <p class="message">Already registered? <a href="login.html">Sign In</a></p>
+        </FORM>
+    </div>
+    <SCRIPT language=JavaScript>
+        function go() {
+
+            if (!document.form.password.value || !document.form.login.value || !document.form.email.value || !document.form.rols.value) {
+                //document.form.submit();
+                alert("Faltó llenar por lo menos un campo");
+                location.href = 'login.html';
+
+            }
+            console.log(document.form.login.value, document.form.password.value, document.form.email.value, document.form.rols.value);
+            const myJSON = {
+                "nombre": document.form.login.value,
+                "password": document.form.password.value,
+                "correo": document.form.email.value,
+                "rol": document.form.rols.value
+
+            };
+            const myString = JSON.stringify(myJSON);
+            console.log(myString);
+            //Conectar con la base de datos y asegurarse de sean datos validos para crear un usuario
+            //Si sí, entonces crea el usuario y redirecciona a inicio de sesion
+
+
+
+
+            //--------------------------------------------
+            //REENVIA A INICIO DE SESION
+            location.href = 'login.html';
+
+            //ESTO SERVIRÁ MÁS TARDE
+            //xmlhttp.open("POST", "json_demo_html_table.php");
+        }
+    </SCRIPT>
+</body>
+
+
+</html>

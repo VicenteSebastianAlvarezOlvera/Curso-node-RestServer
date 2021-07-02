@@ -1,50 +1,54 @@
 const { response, request } = require('express');
+const fs = require('fs');
 const bcryptjs = require('bcryptjs');
 const Usuario = require('../models/usuario');
+const path = require('path');
 
 const usuariosGet = async(req = request, res = response) => {
-        const { limite = 5, desde = 0 } = req.query;
-        const query = { estado: true };
+    //muestra todos los usuarios en grupos de 5 en 5
+    const { limite = 5, desde = 0 } = req.query;
+    const query = { estado: true };
 
-        const [total, usuarios] = await Promise.all([
-            Usuario.countDocuments(query),
-            Usuario.find(query)
-            .skip(Number(desde))
-            .limit(Number(limite))
-        ]);
-        res.json({
-            total,
-            usuarios
-        });
-    }
-    //const usuariosPatch =
-const usuariosPost = async(req, res = response) => {
-
-    const { nombre, correo, password, rol } = req.body;
-    const usuario = new Usuario({ nombre, correo, password, rol });
-
-    /*const existeCorreo = await Usuario.findOne({ correo });
-    if (existeCorreo) {
-        return res.status(400).json({
-            msg: 'Correo ya en uso'
-        });
-    }*/
-
-    const salt = bcryptjs.genSaltSync();
-    usuario.password = bcryptjs.hashSync(password, salt);
-    await usuario.save();
+    const [total, usuarios] = await Promise.all([
+        Usuario.countDocuments(query),
+        Usuario.find(query)
+        .skip(Number(desde))
+        .limit(Number(limite))
+    ]);
     res.json({
-        //msg: 'post API - controlador',
+        total,
+        usuarios
+    });
+}
+const usuariosPost = async(req, res = response) => { //crea usuarios
+
+    const { nombre, correo, password, rol } = req.body; //requerimientos
+    const usuario = new Usuario({ nombre, correo, password, rol }); //los guarda en una variable
+
+    const salt = bcryptjs.genSaltSync(); //encripta la contraseña
+    usuario.password = bcryptjs.hashSync(password, salt);
+    await usuario.save(); //guarda la información en la base de datos
+
+    const direc = path.join(__dirname, '../uploads/', nombre); // dirección de la carpeta
+    if (!fs.existsSync(direc)) { //si existe
+        fs.mkdirSync(direc); // crea la carpeta del usuario
+    }
+    const direcExp = path.join(__dirname, '../uploads/expedientes/', nombre); // dirección del expediente
+    if (!fs.existsSync(direcExp)) { //si existe
+        fs.mkdirSync(direcExp); // crea la carpeta del usuario
+    }
+    res.json({
         usuario
     });
 }
-const usuariosDelete = async(req, res = response) => {
-    const { id } = req.params;
-    const usuario = await Usuario.findByIdAndUpdate(id, { estado: false });
-    //const usuarioaAutenticado = req.usuario;
+const usuariosDelete = async(req, res = response) => { //elimila usuarios, pidiendo el id del 
+    //usuario a eliminar y el jwt de un administrador para proceder
+    const { id } = req.params; //solicita id
+    const usuario = await Usuario.findByIdAndUpdate(id, { estado: false }); //actializa el estado a falso, "eliminandola"
     res.json(usuario);
 }
 const usuariosPut = async(req, res = response) => {
+    //actualiza datos de usuarios
     const { id } = req.params;
     const { _id, password, google, correpo, ...resto } = req.body;
     if (password) {
@@ -57,7 +61,6 @@ const usuariosPut = async(req, res = response) => {
 }
 module.exports = {
     usuariosGet,
-    //usuariosPatch,
     usuariosPost,
     usuariosDelete,
     usuariosPut,

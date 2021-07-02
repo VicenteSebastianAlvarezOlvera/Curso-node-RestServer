@@ -1,25 +1,27 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { cargarArchivos, actualizarImagenCloudinary, mostrarImagen } = require('../controllers/uploads');
-const { coleccionesPermitidas } = require('../helpers');
-const { validarArchivoSubir, validarCampos } = require('../middlewares');
+const { cargarArchivos, actualizarImagenCloudinary, listarDocs, } = require('../controllers/uploads');
+const { esIdValido } = require('../helpers');
+const { validarArchivoSubir, validarCampos, validarJWT, soyAdmin } = require('../middlewares');
 
 
 const router = Router();
-router.post('/', validarArchivoSubir, cargarArchivos);
+router.post('/:id', [
+    validarJWT,
+    soyAdmin,
+    check('id').custom(esIdValido),
+    validarCampos,
+    validarArchivoSubir
+], cargarArchivos);
 
-router.put('/:coleccion/:id', [
+router.put('/:id', [ //ACTUALIZAR IMAGEN DE PERFIL CON ID DE USUARIO
     validarArchivoSubir,
     check('id', 'Debe ser de mongo').isMongoId(),
-    check('coleccion').custom(c => coleccionesPermitidas(c, ['usuarios', 'productos'])),
     validarCampos
-    //], actualizarImagen)
 ], actualizarImagenCloudinary)
-router.get('/:coleccion/:id', [
-    check('id', 'Debe ser de mongo').isMongoId(),
-    check('coleccion').custom(c => coleccionesPermitidas(c, ['usuarios', 'productos'])),
-    validarCampos
-], mostrarImagen)
+router.get('/:id', [
+    check('id').custom(esIdValido)
+], listarDocs)
 
 
 

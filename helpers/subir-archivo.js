@@ -1,20 +1,11 @@
 const path = require('path');
-const { v4: uuidv4 } = require('uuid');
 
 
-const subirArchivo = (files, extensionesValidas = ['png', 'jpg', 'jpeg', 'gif'], carpeta = '') => {
+const subirArchivo = async(files, carpeta = '') => {
     return new Promise((resolve, reject) => {
         const { archivo } = files;
-        const nombreCortado = archivo.name.split('.');
-        const extension = nombreCortado[nombreCortado.length - 1];
 
-
-        if (!extensionesValidas.includes(extension)) {
-            return reject(`La extension ${extension} no es permitida, solo se aceptan extensiones ${extensionesValidas}`);
-        }
-        //console.log({ extension });
-
-        const nombreTemp = uuidv4() + '.' + extension;
+        const nombreTemp = archivo.name;
         const uploadPath = path.join(__dirname, '../uploads/', carpeta, nombreTemp);
 
         archivo.mv(uploadPath, (err) => {
